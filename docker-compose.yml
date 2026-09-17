@@ -1,0 +1,37 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laju-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mysql
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laju
+      DB_USERNAME: laju
+      DB_PASSWORD: laju24
+
+  mysql:
+    image: mysql:8.0
+    container_name: laju-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laju
+      MYSQL_USER: laju
+      MYSQL_PASSWORD: laju24
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
