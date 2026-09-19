@@ -12,7 +12,7 @@ class RunningScheduleController extends Controller
     {
         $runningSchedules = auth()->user()
             ->runningSchedules()
-            ->latest()
+            ->orderByRaw("FIELD(day, 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday')")
             ->get();
 
         return view('running-schedules.index', compact('runningSchedules'));
